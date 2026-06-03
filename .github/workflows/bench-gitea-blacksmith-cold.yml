@@ -1,0 +1,14 @@
+name: bench-gitea-blacksmith-cold
+on:
+  workflow_dispatch:
+jobs:
+  docker:
+    runs-on: blacksmith-4vcpu-ubuntu-2404
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Build image (no cache)
+        env:
+          DOCKER_BUILDKIT: 1
+        run: docker build -t bench-gitea .

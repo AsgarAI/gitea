@@ -1,0 +1,20 @@
+name: bench-gitea-namespace-tuned
+on:
+  workflow_dispatch:
+jobs:
+  docker:
+    runs-on: namespace-profile-asgar
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      # Local-cache approach: persist /var/lib/docker across runs.
+      # Namespace also offers remote builders (not used here).
+      - uses: namespacelabs/nscloud-cache-action@v1
+        with:
+          cache: |
+            /var/lib/docker
+      - name: Build image
+        env:
+          DOCKER_BUILDKIT: 1
+        run: docker build -t bench-gitea .

@@ -1,0 +1,14 @@
+name: bench-gitea-depot-cold
+on:
+  workflow_dispatch:
+jobs:
+  docker:
+    runs-on: depot-ubuntu-24.04-4
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Build image (no cache)
+        env:
+          DOCKER_BUILDKIT: 1
+        run: docker build -t bench-gitea .
