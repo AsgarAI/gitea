@@ -4,11 +4,15 @@ on:
 jobs:
   docker:
     runs-on: depot-ubuntu-24.04-4
+    permissions:
+      contents: read
+      id-token: write
     steps:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
       - uses: depot/build-push-action@v1
         with:
+          project: m6xl170cwf
           context: .
           tags: bench-gitea
