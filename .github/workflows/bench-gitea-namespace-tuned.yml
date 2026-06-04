@@ -8,13 +8,10 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      # Local-cache approach: persist /var/lib/docker across runs.
-      # Namespace also offers remote builders (not used here).
-      - uses: namespacelabs/nscloud-cache-action@v1
+      - uses: docker/setup-buildx-action@v3
+      - uses: docker/build-push-action@v6
         with:
-          path: |
-            /var/lib/docker
-      - name: Build image
-        env:
-          DOCKER_BUILDKIT: 1
-        run: docker build -t bench-gitea .
+          context: .
+          tags: bench-gitea
+          cache-from: type=gha
+          cache-to: type=gha,mode=max

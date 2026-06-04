@@ -8,9 +8,10 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      - uses: depot/build-push-action@v1
+      - uses: docker/setup-buildx-action@v3
+      - uses: docker/build-push-action@v6
         with:
-          project: m6xl170cwf
-          token: ${{ secrets.DEPOT_TOKEN }}
           context: .
           tags: bench-gitea
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
