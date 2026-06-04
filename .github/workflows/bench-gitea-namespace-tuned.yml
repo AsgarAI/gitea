@@ -12,7 +12,7 @@ jobs:
       # Namespace also offers remote builders (not used here).
       - uses: namespacelabs/nscloud-cache-action@v1
         with:
-          cache: |
+          path: |
             /var/lib/docker
       - name: Build image
         env:
